@@ -59,8 +59,7 @@ u8 db_select(sqlite3* db, u8 id, star_data* data){
 
         if(empty == TRUE){
                 return 0;
-        }
-        if(empty == FALSE){
+        }else{
                 empty = TRUE;
                 return 1;
         }

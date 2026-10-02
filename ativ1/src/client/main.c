@@ -5,6 +5,18 @@
 #include <stdlib.h>
 
 
+void scan_estrela(star_data* data){
+        printf(" Digite o nome da estrela: ");
+        scanf("%s", data->nome);
+        printf(" Digite a massa da estrela: ");
+        scanf("%f", &data->massa);
+        printf(" Digite a temperatura da estrela: ");
+        scanf("%f", &data->temperatura);
+        printf(" Digite a luminosidade da estrela: ");
+        scanf("%f", &data->luminosidade);
+        printf(" Digite o raio da estrela: ");
+        scanf("%f", &data->raio);
+}
 
 int main(){
 
@@ -42,21 +54,14 @@ int main(){
                         case 'C':
                         case 'c':
                                 puts("CRIAR");
-                                puts("Digite o nome da estrela:");
-                                scanf("%s", data.nome);
-                                puts("Digite a massa da estrela:");
-                                scanf("%f", &data.massa);
-                                puts("Digite a temperatura da estrela:");
-                                scanf("%f", &data.temperatura);
-                                puts("Digite a luminosidade da estrela:");
-                                scanf("%f", &data.luminosidade);
-                                puts("Digite o raio da estrela:");
-                                scanf("%f", &data.raio);
+                                scan_estrela(&data);
 
                                 message_size = sizeof(op) + sizeof(data);
                                 message = (char*)malloc(message_size);
                                 memcpy(message, &op, sizeof(op));
                                 memcpy(message+sizeof(op), &data, sizeof(data));
+
+                                printf("%ld", sizeof(data));
 
                                 send(connfd, message, message_size, 0);
                                 free(message);
@@ -64,7 +69,7 @@ int main(){
                         case 'R':
                         case 'r':
                                 puts("LER");
-                                puts("Digite o ID desejado:");
+                                printf("Digite o ID desejado: ");
                                 scanf("%hhu", &id);
                                 message_size = sizeof(op) + sizeof(id);
                                 message = (char*)malloc(message_size);
@@ -88,20 +93,10 @@ int main(){
                         case 'u':
                                 puts("ATUALIZAR");
 
-                                puts("Digite o ID desejado:");
+                                printf("Digite o ID desejado: ");
                                 scanf("%hhu", &id);
 
-                                puts("Digite o nome da estrela:");
-                                scanf("%s", data.nome);
-                                puts("Digite a massa da estrela:");
-                                scanf("%f", &data.massa);
-                                puts("Digite a temperatura da estrela:");
-                                scanf("%f", &data.temperatura);
-                                puts("Digite a luminosidade da estrela:");
-                                scanf("%f", &data.luminosidade);
-                                puts("Digite o raio da estrela:");
-                                scanf("%f", &data.raio);
-
+                                scan_estrela(&data); 
 
                                 message_size = sizeof(op) + sizeof(id) + sizeof(data);
 
@@ -117,7 +112,7 @@ int main(){
                         case 'D':
                         case 'd':
                                 puts("DELETAR");
-                                puts("Digite o ID desejado:");
+                                printf("Digite o ID desejado: ");
                                 scanf("%hhu", &id);
                                 message_size = sizeof(op) + sizeof(id);
                                 message = (char*)malloc(message_size);
