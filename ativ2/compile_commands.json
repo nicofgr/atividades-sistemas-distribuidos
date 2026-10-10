@@ -1,0 +1,30 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-I.",
+      "-I./assets",
+      "-I./build",
+      "-I./build/src",
+      "-I./build/src/server",
+      "-I./.cache",
+      "-I./.cache/clangd",
+      "-I./.cache/clangd/index",
+      "-I./src",
+      "-I./src/shared",
+      "-I./src/client",
+      "-I./src/server",
+      "-I/usr/include/tirpc",
+      "-std=c99",
+      "-Wall",
+      "-Wextra",
+      "-c",
+      "-o",
+      "build/./src/server/main.c.o",
+      "src/server/main.c"
+    ],
+    "directory": "/home/nico/Documents/UTFPR/CP49B_Sistemas_Distribuidos/atividades_praticas/ativ/ativ2",
+    "file": "/home/nico/Documents/UTFPR/CP49B_Sistemas_Distribuidos/atividades_praticas/ativ/ativ2/src/server/main.c",
+    "output": "/home/nico/Documents/UTFPR/CP49B_Sistemas_Distribuidos/atividades_praticas/ativ/ativ2/build/src/server/main.c.o"
+  }
+]

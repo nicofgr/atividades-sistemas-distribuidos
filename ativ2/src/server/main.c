@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <sqlite3.h>
 #include <string.h>
-#include "../shared/network.h"
+#include "../shared/middle.h"
+#include "../shared/constants.h"
+#include "rpc/svc.h"
+
 
 void insert(sqlite3* db, star_data data){
         char buffer[512];
@@ -108,14 +111,67 @@ void delete(sqlite3* db, u8 id){
         }
 }
 
-int main(){
+
+// ====== RPC STUFF ============================================================
+//
+int * create_1_svc(star_data* data, struct svc_req * req){
+        static int status;
 
         sqlite3 *db;
-        char* zErrMsg = 0;
         int rc;
+        rc = sqlite3_open("data.db", &db);
+
+        insert(db, *data);
+
+        sqlite3_close(db);
+        return &status;
+}
+
+star_data * read_1_svc(int* id, struct svc_req * req){
+        static int status;
+
+        sqlite3 *db;
+        int rc;
+        rc = sqlite3_open("data.db", &db);
+
+        star_data data;
+        db_select(db, *id, &data);
+
+        sqlite3_close(db);
+        return &data;
+}
+
+void * update_1_svc(star_data* data, struct svc_req * req){
+        static int status;
+
+        sqlite3 *db;
+        int rc;
+        rc = sqlite3_open("data.db", &db);
+
+        update(db, data->id, *data);
+
+        sqlite3_close(db);
+        return &status;
+}
+
+void * delete_1_svc(int* id, struct svc_req * req){
+        static int status;
+
+        sqlite3 *db;
+        int rc;
+        rc = sqlite3_open("data.db", &db);
+
+        delete(db, *id);
+
+        sqlite3_close(db);
+        return &status;
+}
+/**
+int main(){
+
+        char* zErrMsg = 0;
         char buffer[1024] = {0};
 
-        rc = sqlite3_open("data.db", &db);
 
         if(rc){
                 fprintf(stderr, "Cant open database: %s\n", sqlite3_errmsg(db));
@@ -143,12 +199,17 @@ int main(){
 
 
         // NETWORK 
-        int sockfd = create_server(PORT);
+
+        register SVCXPRT *transp;
+
+        pmap_unset(CRUDPROG, CRUDVERS);
+
+        transp = svcudp_create(RPC_ANYSOCK);
+        if(transp == NULL){
+                exit(1);
+        }
 
         while(1){
-                int connfd = accept_client(sockfd);
-                int connected = TRUE;
-
                 u8 op;
                 u8 id;
                 while(connected == TRUE){  // While a client is connected
@@ -212,9 +273,10 @@ int main(){
                 }
         }
 
-        //sqlite3_close(db);
         //close(connfd);
         close(sockfd);
-
-        return 0;
+        svc_run();
+        fprintf(stderr, "svc_run returned");
+        exit(1);
 }       
+**/
