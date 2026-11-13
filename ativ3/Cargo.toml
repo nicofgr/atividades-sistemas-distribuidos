@@ -1,0 +1,16 @@
+[package]
+name = "ativ4"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+axum = { version = "0.8.9" , features = ["macros"] }
+validator = { version = "0.20.0", features = ["derive"] }
+axum-valid = "0.25.0"
+serde_json = "1.0.143"
+tokio = { version = "1", features = ["full"] }
+sqlx = { version = "0.8", features = [ "runtime-tokio", "tls-rustls-ring-webpki", "sqlite", "chrono", "uuid" ] }
+dotenv = "0.15.0"
+serde = { version = "1.0.219", features = ["derive"] }
+chrono = { version = "0.4.41", features = ["serde"] }
+uuid = { version = "1.17.0", features = ["serde", "v4"] }
