@@ -5,6 +5,7 @@ cargo run
 
 ## Exemplos de códigos para teste
 
+Adicionar uma estrela à tabela stars:
 ``` bash
 curl -i -X POST http://localhost:3000/stars   -H "Content-Type: application/json"   -d '{
     "name": "Hello", 
@@ -15,7 +16,7 @@ curl -i -X POST http://localhost:3000/stars   -H "Content-Type: application/json
   }'
 ```
 
-
+Exemplo de erro, tipo inválido:
 ``` bash
 curl -i -X POST http://localhost:3000/observations   -H "Content-Type: application/json"   -d '{
     "telescope": "Hubble", 
@@ -23,9 +24,13 @@ curl -i -X POST http://localhost:3000/observations   -H "Content-Type: applicati
     "starid": 1                   
   }'
 ```
+
+Mostrar estrela com id = 2:
 ``` bash
 curl -X GET http://localhost:3000/stars/2 -s -v | jq .
 ```
+
+Mostrar observações:
 ```bash
 curl -X GET http://localhost:3000/observations -s -v | jq .
 ```
